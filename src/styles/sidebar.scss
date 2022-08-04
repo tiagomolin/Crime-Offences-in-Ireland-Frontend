@@ -1,0 +1,60 @@
+.main-navbar {
+  padding: 0 0 0 0;
+}
+
+#basic-navbar-nav {
+  background-color: #d8d5cb;
+}
+
+.sidebar {
+  color: #736665;
+  background-color: #d8d5cb;
+  min-width: 320px;
+  max-width: 550px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 28px 28px;
+
+  select {
+    color: #736665 !important;
+  }
+
+  .nav-item {
+    padding-top: 3rem;
+  }
+
+  .btn-apply-filter {
+    padding: 48px 0.2rem 0;
+    button {
+      color: #736665 !important;
+    }
+  }
+}
+
+.sidebar-inner {
+  padding: 40px;
+}
+
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+
+@include media-breakpoint-up(lg) {
+  .sidebar {
+    min-height: 100vh;
+    max-height: 100%;
+  }
+  .btn-apply-filter {
+    padding: 48px 0.2rem 0;
+    width: 85%;
+    position: absolute;
+
+    bottom: 0;
+
+    .container {
+      padding-bottom: 2rem;
+    }
+  }
+}

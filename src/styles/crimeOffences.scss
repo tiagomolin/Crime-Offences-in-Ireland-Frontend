@@ -1,0 +1,27 @@
+.container-crime-offences-filter {
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  .react-checkbox-tree {
+    .rct-checkbox {
+      font-size: larger;
+    }
+    ol {
+      padding: 0.3rem;
+      font-size: 28px !important;
+      background-color: rgba(255, 255, 255, 0.76);
+      border-radius: 0.4rem;
+      box-shadow: 0 30px 40px rgba(0, 0, 0, 0.1);
+      ol {
+        font-size: 24px !important;
+        background-color: #6e353133;
+        border-radius: 0.4rem;
+        ol {
+          font-size: 20px !important;
+          background-color: #6e353133;
+          border-radius: 0.4rem;
+        }
+      }
+    }
+  }
+}
