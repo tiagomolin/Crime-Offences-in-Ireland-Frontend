@@ -21,7 +21,7 @@ export function MainContent() {
             on a graph for the choosen period.
           </p>
           <p className="paragraph-header-legend">
-            *Details on data resources are described on the bootom of the page.
+            *Details on data resources are described at the bootom of the page.
           </p>
         </Row>
         <Row className="transition-header-map" />
@@ -70,7 +70,12 @@ export function MainContent() {
             >
               Garda Organisational structure
             </a>{" "}
-            website
+            website.
+          </p>
+          <p>
+            All the crime offences figures are absolute numbers and do not
+            consider the population density for that particular Garda Division
+            area.
           </p>
         </Row>
       </Container>
