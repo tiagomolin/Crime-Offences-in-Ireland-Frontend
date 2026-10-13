@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 import { useEffect, useState } from "react";
 import { PeriodFilter } from "./PeriodFilter";
 //import { Offence } from "./Offence";
@@ -9,7 +10,7 @@ export function Periods() {
 
   useEffect(() => {
     axios
-      .get("https://irish-crime-data.herokuapp.com/periods")
+      .get(`${API_BASE_URL}/periods`)
       .then((response) => setPeriods(response.data));
   }, []);
 

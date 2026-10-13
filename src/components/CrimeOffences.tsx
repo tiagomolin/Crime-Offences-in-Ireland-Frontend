@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 import { SetStateAction, useEffect, useState } from "react";
 import { Offence } from "./Offence";
 
@@ -83,7 +84,7 @@ export function CrimeOffences() {
 
   function fetchCategoryTreeData() {
     axios
-      .get("https://irish-crime-data.herokuapp.com/categories")
+      .get(`${API_BASE_URL}/categories`)
       .then((response) => {
         setCrimeOffencesTree([mountOffenceTree(response.data)]);
       })

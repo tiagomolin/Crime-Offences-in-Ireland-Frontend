@@ -11,6 +11,7 @@ import { LatLngExpression } from "leaflet";
 import Legend from "./Legend";
 import "leaflet/dist/leaflet.css";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 import { DivisionArea } from "./DivisionArea";
 
 //import "leaflet/dist/leaflet.css";
@@ -123,7 +124,7 @@ export function Map() {
 
   function fetchDivisions() {
     axios
-      .get("https://irish-crime-data.herokuapp.com/divisions")
+      .get(`${API_BASE_URL}/divisions`)
       .then((response) => {
         const mapped = response.data.map((res: any) => {
           return {

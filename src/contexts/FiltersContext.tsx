@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, FC } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 interface Offence {
   division_number: number;
@@ -198,7 +199,7 @@ export const FiltersProvider: FC = ({ children }) => {
     };
 
     axios
-      .post("https://irish-crime-data.herokuapp.com/crimes_period", req_data)
+      .post(`${API_BASE_URL}/crimes_period`, req_data)
       .then((response) => {
         const mapped = response.data.map((res: any) => {
           return {
@@ -227,7 +228,7 @@ export const FiltersProvider: FC = ({ children }) => {
     };
 
     axios
-      .post("https://irish-crime-data.herokuapp.com/crimes", req_data)
+      .post(`${API_BASE_URL}/crimes`, req_data)
       .then((response) => {
         const mapped = response.data.map((res: any) => {
           return {
