@@ -1,8 +1,7 @@
-import { Button, Col, Row, Container } from "react-bootstrap";
+import { Button, Row, Container } from "react-bootstrap";
 import "../styles/sidebar.scss";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { CrimeOffences } from "./CrimeOffences";
 import { Periods } from "./Periods";
 import { useFilters } from "../contexts/FiltersContext";
@@ -18,7 +17,11 @@ export function Sidebar() {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto col-md-12 d-md-block  sidebar">
-          <h1>Filter Data</h1>
+          <div className="sidebar-heading">
+            <p className="eyebrow">EXPLORE THE DATA</p>
+            <h1>Filters</h1>
+            <p className="sidebar-description">Choose offence categories and a time range.</p>
+          </div>
           <Nav.Item>
             <CrimeOffences />
           </Nav.Item>

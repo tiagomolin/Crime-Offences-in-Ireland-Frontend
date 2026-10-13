@@ -48,8 +48,8 @@ export function Map() {
     return 0;
   }
 
-  const baseBestColor = { red: 128, green: 0, blue: 38 };
-  const baseWrostColor = { red: 255, green: 237, blue: 160 };
+  const baseBestColor = { red: 21, green: 83, blue: 92 };
+  const baseWrostColor = { red: 217, green: 238, blue: 232 };
 
   function getProportionalColor(offenceCount: number) {
     var red: number = 0;

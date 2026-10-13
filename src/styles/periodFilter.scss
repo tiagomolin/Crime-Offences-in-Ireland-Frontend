@@ -1,8 +1,25 @@
 .period-filter {
+  width: 100%;
   max-width: 400px;
+
+  .form-select {
+    min-height: 42px;
+    border-color: var(--color-line);
+    border-radius: var(--radius-control);
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 0.95rem;
+    box-shadow: none;
+  }
+
+  .form-select:focus {
+    border-color: var(--color-teal);
+    box-shadow: 0 0 0 0.18rem rgba(23, 107, 112, 0.14);
+  }
 }
 
 .periods-filter {
+  width: 100%;
   max-width: 400px;
-  padding-bottom: 3rem;
+  padding-bottom: 0;
 }

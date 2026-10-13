@@ -1,36 +1,125 @@
 @import "~bootstrap/scss/bootstrap";
 
+:root {
+  --color-ink: #1e3038;
+  --color-teal: #176b70;
+  --color-teal-deep: #123d45;
+  --color-teal-soft: #d8eae8;
+  --color-paper: #f4f7f8;
+  --color-panel: #edf2f4;
+  --color-surface: #ffffff;
+  --color-muted: #65777f;
+  --color-line: rgba(31, 61, 72, 0.13);
+  --color-map-low: #d9eee8;
+  --color-map-high: #15535c;
+  --radius-card: 12px;
+  --radius-control: 7px;
+  --shadow-card: 0 8px 24px rgba(28, 53, 63, 0.06);
+}
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-
-  h1 {
-    font-weight: bold;
-  }
-
-  .col-sidebar {
-    background-color: #d8d5cb;
-    padding: 0 0 0 0;
-  }
-  .col-main-content {
-    background-color: #d8d5cb;
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 body {
-  font: 16px "Helvetica-Neue", "Arial", sans-serif;
-  height: 100%;
-  margin: 0 0 0 0;
+  margin: 0;
+  min-height: 100vh;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  font: 15px/1.55 "Inter", "Segoe UI", Arial, sans-serif;
 }
 
-.initial-page {
-  display: flex;
+h1, h2, h3, p {
+  margin-top: 0;
 }
 
 ul {
   list-style: none;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 292px minmax(0, 1fr);
+  align-content: start;
+}
+
+.site-header {
+  grid-column: 1 / -1;
+  padding: 24px clamp(22px, 4vw, 60px) 28px;
+  background: var(--color-teal-deep);
+  color: #f6fbfc;
+}
+
+.site-header-inner {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.site-header .header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.site-header .eyebrow {
+  margin: 0;
+  color: #a9d0cf;
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.site-header .date-range {
+  color: #d3e7e6;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.site-header h1 {
+  margin: 0 0 0.4rem;
+  color: #fff;
+  font-size: clamp(1.8rem, 3vw, 2.45rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.site-header .header-description {
+  max-width: 720px;
+  margin: 0;
+  color: #d2e0e2;
+  font-size: 0.97rem;
+}
+
+.app-sidebar {
+  min-width: 0;
+  background: var(--color-panel);
+  border-right: 1px solid var(--color-line);
+}
+
+.app-main {
+  min-width: 0;
+  padding: 26px clamp(18px, 3vw, 42px) 36px;
+}
+
+@media (max-width: 991.98px) {
+  .app-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .app-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .site-header {
+    padding: 22px 20px 24px;
+  }
+
+  .app-main {
+    padding: 18px 16px 28px;
+  }
 }

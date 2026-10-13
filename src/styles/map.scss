@@ -1,6 +1,22 @@
 .map {
   display: block;
-  border-radius: 50px;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+
+  h1 {
+    margin-bottom: 1rem;
+    color: var(--color-teal-deep);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .leaflet-container {
+    height: min(66vh, 720px) !important;
+    min-height: 420px;
+    background: #e6eef0;
+  }
 }
 
 .legend-color-box {
@@ -8,16 +24,17 @@
   width: 20px;
   height: 80px;
   margin: 0 10px;
-  background-image: linear-gradient(rgb(128, 0, 38), rgb(255, 237, 160));
-  border-radius: 2px;
+  background-image: linear-gradient(var(--color-map-high), var(--color-map-low));
+  border-radius: 3px;
   border-style: outset;
   border-width: 1px;
 }
 
 .info-legend {
-  background-color: rgba(255, 255, 255, 0.699);
-  padding: 10px;
-  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.96);
+  padding: 10px 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
   display: block;
   align-items: center;
   justify-content: center;

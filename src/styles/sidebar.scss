@@ -1,40 +1,72 @@
 .main-navbar {
-  padding: 0 0 0 0;
+  display: block;
+  padding: 0;
+  background: transparent !important;
 }
 
 #basic-navbar-nav {
-  background-color: #d8d5cb;
+  background-color: transparent;
 }
 
 .sidebar {
-  color: #736665;
-  background-color: #d8d5cb;
-  min-width: 320px;
-  max-width: 550px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  padding: 28px 28px;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  padding: 28px 22px 24px;
+  color: var(--color-ink);
 
   select {
-    color: #736665 !important;
+    color: var(--color-ink) !important;
   }
 
   .nav-item {
-    padding-top: 3rem;
+    padding-top: 1.5rem;
   }
 
   .btn-apply-filter {
-    padding: 48px 0.2rem 0;
+    padding: 1.8rem 0 0;
     button {
-      color: #736665 !important;
+      width: 100%;
+      border-color: var(--color-teal) !important;
+      background: var(--color-teal) !important;
+      color: #fff !important;
+      border-radius: var(--radius-control);
+      box-shadow: none;
+
+      &:hover,
+      &:focus {
+        border-color: var(--color-teal-deep) !important;
+        background: var(--color-teal-deep) !important;
+        color: #fff !important;
+      }
     }
   }
 }
 
-.sidebar-inner {
-  padding: 40px;
+.sidebar-heading {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin-bottom: 0.35rem;
+    color: var(--color-ink);
+    font-size: 1.55rem;
+    font-weight: 700;
+  }
+}
+
+.sidebar-description {
+  margin-bottom: 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--color-teal);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
 }
 
 @import "~bootstrap/scss/_functions";
@@ -43,18 +75,12 @@
 
 @include media-breakpoint-up(lg) {
   .sidebar {
+    position: sticky;
+    top: 0;
     min-height: 100vh;
-    max-height: 100%;
   }
+
   .btn-apply-filter {
-    padding: 48px 0.2rem 0;
-    width: 85%;
-    position: absolute;
-
-    bottom: 0;
-
-    .container {
-      padding-bottom: 2rem;
-    }
+    width: 100%;
   }
 }

@@ -1,37 +1,17 @@
 import "../styles/mainPage.scss";
 import { Map } from "./Map";
 import { Graph } from "./Graph";
-import { Container, Row } from "react-bootstrap";
 
 export function MainContent() {
   return (
-    <>
-      <Container fluid className="main-content">
-        <Row className="header-main-content">
-          <h1>Crime Offences in Ireland</h1>
-          <p>
-            This website displays <b>figures*</b> regarding crime offences in
-            Ireland for all the Garda Divisions with a map visual
-            representation.
-          </p>
-          <p>
-            The user may choose one or many types of crime offences and the
-            period they want to see data for, using the Filter Data section and
-            later click on the map to see the crime data for that Garda Division
-            on a graph for the choosen period.
-          </p>
-          <p className="paragraph-header-legend">
-            *Details on data resources are described at the bootom of the page.
-          </p>
-        </Row>
-        <Row className="transition-header-map" />
-        <Row className="map-container-row">
-          <Map />
-        </Row>
-        <Row className="graph-container-row">
-          <Graph />
-        </Row>
-        <Row className="footer-main-content">
+    <div className="main-content">
+      <section className="map-container-row" aria-label="Crime offences map">
+        <Map />
+      </section>
+      <section className="graph-container-row" aria-label="Crime offences chart">
+        <Graph />
+      </section>
+      <footer className="footer-main-content">
           <p>
             This website was developed by Tiago Molin, Student ID 21115281, as
             part of the Project module for the Machine Learning Fundamentals
@@ -77,8 +57,7 @@ export function MainContent() {
             consider the population density for that particular Garda Division
             area.
           </p>
-        </Row>
-      </Container>
-    </>
+      </footer>
+    </div>
   );
 }

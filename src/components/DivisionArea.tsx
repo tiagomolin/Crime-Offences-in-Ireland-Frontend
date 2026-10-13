@@ -14,9 +14,6 @@ interface OffenceCountDivision {
 export function DivisionArea(props: OffenceCountDivision) {
   const [fillOpacity, setFillOpacity] = useState(0.5);
 
-  //rgb(128, 0, 38)
-  //rgb(255, 237, 160)
-
   const { pickDivision } = useFilters();
 
   function handleClick() {
