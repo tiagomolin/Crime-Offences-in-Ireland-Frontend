@@ -1,86 +1,47 @@
-.main-navbar {
-  display: block;
-  padding: 0;
-  background: transparent !important;
-}
-
-#basic-navbar-nav {
-  background-color: transparent;
-}
+.main-navbar { display: block; padding: 0; background: transparent !important; }
+#basic-navbar-nav { background-color: transparent; }
 
 .sidebar {
   display: block;
   width: 100%;
   min-width: 0;
   max-width: none;
-  padding: 28px 22px 24px;
+  padding: 30px 22px 25px;
   color: var(--color-ink);
 
-  select {
-    color: var(--color-ink) !important;
-  }
-
-  .nav-item {
-    padding-top: 1.5rem;
-  }
+  select { color: var(--color-ink) !important; }
+  .nav-item { padding-top: 1.45rem; }
 
   .btn-apply-filter {
-    padding: 1.8rem 0 0;
+    padding: 1.65rem 0 0;
     button {
       width: 100%;
-      border-color: var(--color-teal) !important;
+      min-height: 48px;
+      border: 1px solid var(--color-teal) !important;
+      border-radius: var(--radius-control);
       background: var(--color-teal) !important;
       color: #fff !important;
-      border-radius: var(--radius-control);
-      box-shadow: none;
+      font-size: .94rem;
+      font-weight: 650;
+      box-shadow: 0 5px 12px rgba(23, 107, 112, .16);
+      transition: transform 120ms ease, background-color 160ms ease, box-shadow 160ms ease;
 
-      &:hover,
-      &:focus {
-        border-color: var(--color-teal-deep) !important;
-        background: var(--color-teal-deep) !important;
-        color: #fff !important;
-      }
+      &:hover, &:focus { border-color: var(--color-teal-deep) !important; background: var(--color-teal-deep) !important; color: #fff !important; box-shadow: 0 7px 16px rgba(18, 61, 69, .2); }
+      &:active { transform: scale(.985); }
     }
   }
 }
 
-.sidebar-heading {
-  margin-bottom: 1.5rem;
-
-  h1 {
-    margin-bottom: 0.35rem;
-    color: var(--color-ink);
-    font-size: 1.55rem;
-    font-weight: 700;
-  }
-}
-
-.sidebar-description {
-  margin-bottom: 0;
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-.eyebrow {
-  margin-bottom: 0.5rem;
-  color: var(--color-teal);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-}
+.sidebar-heading { margin-bottom: 1.45rem; }
+.sidebar-heading h2 { margin-bottom: .35rem; color: var(--color-ink); font-size: 1.5rem; font-weight: 680; letter-spacing: -.035em; }
+.sidebar-description { margin-bottom: 0; color: var(--color-muted); font-size: .88rem; }
+.eyebrow { margin-bottom: .45rem; color: var(--color-teal); font-size: .67rem; font-weight: 720; letter-spacing: .14em; }
 
 @import "~bootstrap/scss/_functions";
 @import "~bootstrap/scss/_variables";
 @import "~bootstrap/scss/mixins/_breakpoints";
 
 @include media-breakpoint-up(lg) {
-  .sidebar {
-    position: sticky;
-    top: 0;
-    min-height: 100vh;
-  }
-
-  .btn-apply-filter {
-    width: 100%;
-  }
+  .sidebar { position: sticky; top: 0; min-height: 100vh; }
+  .btn-apply-filter { width: 100%; }
 }

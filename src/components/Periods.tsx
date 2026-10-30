@@ -16,9 +16,10 @@ export function Periods() {
 
   return (
     <div className="periods-filter">
-      <h3>Period</h3>
-      <ul>
-        <li>From</li>
+      <h3>Time period</h3>
+      <div className="period-range">
+        <div className="period-range-field">
+          <span className="period-field-label">From</span>
         <PeriodFilter
           key="from"
           selected_quarter={1}
@@ -26,8 +27,9 @@ export function Periods() {
           is_to={false}
           periods={periods}
         />
-
-        <li>To</li>
+        </div>
+        <div className="period-range-field">
+          <span className="period-field-label">To</span>
         <PeriodFilter
           key="to"
           selected_quarter={76}
@@ -35,7 +37,8 @@ export function Periods() {
           is_to={true}
           periods={periods}
         />
-      </ul>
+        </div>
+      </div>
     </div>
   );
 }

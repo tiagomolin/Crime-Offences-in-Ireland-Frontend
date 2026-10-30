@@ -1,58 +1,45 @@
 .main-content {
   color: var(--color-ink);
 
-  a:link,
-  a:visited,
-  a:active {
-    color: var(--color-teal);
-  }
-  a:hover {
-    color: var(--color-teal-deep);
-  }
+  a:link, a:visited, a:active { color: var(--color-teal); }
+  a:hover { color: var(--color-teal-deep); }
 
   .map-container-row,
   .graph-container-row {
     display: block;
     min-width: 0;
     margin-bottom: 22px;
-    padding: clamp(16px, 2vw, 26px);
-    border: 1px solid var(--color-line);
+    padding: clamp(17px, 2vw, 26px);
+    border: 1px solid rgba(31, 61, 72, .09);
     border-radius: var(--radius-card);
     background: var(--color-surface);
     box-shadow: var(--shadow-card);
+    transition: box-shadow 180ms ease, transform 180ms ease;
   }
+
+  .map-container-row:hover,
+  .graph-container-row:hover { box-shadow: 0 14px 38px rgba(28, 53, 63, .08); }
 
   .footer-main-content {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem 2rem;
+    gap: .6rem 2rem;
     margin-top: 28px;
-    padding: 24px 28px;
+    padding: 23px 26px;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
-    background: var(--color-panel);
+    background: rgba(255, 255, 255, .65);
     color: var(--color-muted);
-    font-size: 0.86rem;
+    font-size: .83rem;
+    line-height: 1.65;
 
-    p {
-      margin-bottom: 0.65rem;
-    }
-
-    a:link,
-    a:visited,
-    a:active {
-      color: var(--color-teal);
-    }
-
-    a:hover {
-      color: var(--color-teal-deep);
-    }
+    p { margin-bottom: .55rem; }
+    a:link, a:visited, a:active { color: var(--color-teal); }
+    a:hover { color: var(--color-teal-deep); }
   }
 
   @media (max-width: 700px) {
-    .footer-main-content {
-      grid-template-columns: minmax(0, 1fr);
-    }
+    .footer-main-content { grid-template-columns: minmax(0, 1fr); }
   }
 }
 
@@ -60,8 +47,4 @@
 @import "~bootstrap/scss/_variables";
 @import "~bootstrap/scss/mixins/_breakpoints";
 
-@include media-breakpoint-up(lg) {
-  .main-content {
-    width: 100%;
-  }
-}
+@include media-breakpoint-up(lg) { .main-content { width: 100%; } }

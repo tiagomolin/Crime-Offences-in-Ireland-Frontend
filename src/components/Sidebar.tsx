@@ -19,7 +19,7 @@ export function Sidebar() {
         <Nav className="me-auto col-md-12 d-md-block  sidebar">
           <div className="sidebar-heading">
             <p className="eyebrow">EXPLORE THE DATA</p>
-            <h1>Filters</h1>
+            <h2>Filters</h2>
             <p className="sidebar-description">Choose offence categories and a time range.</p>
           </div>
           <Nav.Item>
@@ -32,7 +32,7 @@ export function Sidebar() {
             <Container>
               <Row>
                 <Button variant="light" onClick={handleApplyFilters} size="lg">
-                  <b>Apply Filters</b>
+                  Apply filters
                 </Button>
               </Row>
             </Container>

@@ -150,7 +150,13 @@ export function Map() {
   return (
     <div className="map-data">
       <div className="map">
-        <h1>Choropleth Map for Ireland Crime Offences</h1>
+        <div className="map-heading">
+          <div>
+            <p className="section-kicker">GEOGRAPHIC VIEW</p>
+            <h2>Recorded offences by Garda division</h2>
+          </div>
+          <p className="section-hint">Select a division to explore its figures</p>
+        </div>
         <MapContainer
           center={center}
           zoom={7}

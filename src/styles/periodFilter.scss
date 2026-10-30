@@ -23,3 +23,7 @@
   max-width: 400px;
   padding-bottom: 0;
 }
+
+.period-range { display: grid; gap: .9rem; }
+.period-range-field { display: grid; gap: .42rem; }
+.period-field-label { color: var(--color-muted); font-size: .78rem; font-weight: 650; }

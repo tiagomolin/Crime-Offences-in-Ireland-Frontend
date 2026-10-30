@@ -97,6 +97,7 @@ export function PeriodFilter(props: Periods) {
           <Col md={7}>
             <Form.Select
               size="lg"
+              aria-label={`${props.is_from ? "From" : "To"} year`}
               value={selectedYear}
               onChange={handleSelectedYearChange}
             >
@@ -112,6 +113,7 @@ export function PeriodFilter(props: Periods) {
           <Col md={5}>
             <Form.Select
               size="lg"
+              aria-label={`${props.is_from ? "From" : "To"} quarter`}
               value={selectedQuarter}
               onChange={handleSelectedQuarterChange}
             >

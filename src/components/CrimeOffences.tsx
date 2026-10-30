@@ -107,7 +107,7 @@ export function CrimeOffences() {
 
   return (
     <div className="crime-offences">
-      <h3>Types of Offences</h3>
+      <h3>Offence categories</h3>
       <Container className="container-crime-offences-filter">
         <CheckboxTree
           nodes={crimeOffencesTree}

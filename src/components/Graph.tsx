@@ -59,10 +59,8 @@ export function Graph() {
       legend: {
         position: "top" as const,
       },
-      title: {
-        display: true,
-        text: "Crime Offences/Period",
-      },
+      title: { display: false },
+      tooltip: { intersect: false, mode: "index" as const },
     },
   };
 
@@ -72,7 +70,8 @@ export function Graph() {
 
   return (
     <div className="graph-data">
-      <h1>Crime Data for {gardaDescription}</h1>
+      <p className="section-kicker">TREND OVER TIME</p>
+      <h2>Recorded offences <span className="graph-location">{gardaDescription}</span></h2>
       <Line data={graphData} options={options} />
     </div>
   );
