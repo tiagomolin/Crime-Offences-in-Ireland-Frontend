@@ -11,16 +11,21 @@
     margin-bottom: 22px;
     padding: clamp(17px, 2vw, 26px);
     border: 1px solid rgba(31, 61, 72, .09);
-    border-radius: var(--radius-card);
+    border-radius: 22px;
     background: var(--color-surface);
     box-shadow: var(--shadow-card);
-    transition: box-shadow 180ms ease, transform 180ms ease;
+    transition: transform 180ms ease;
   }
 
-  .map-container-row:hover,
-  .graph-container-row:hover { box-shadow: 0 14px 38px rgba(28, 53, 63, .08); }
+  @media (hover: hover) and (pointer: fine) {
+    .map-container-row:hover,
+    .graph-container-row:hover { transform: translateY(-2px); }
+  }
 
   .footer-main-content {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: .6rem 2rem;
@@ -28,18 +33,50 @@
     padding: 23px 26px;
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
-    background: rgba(255, 255, 255, .65);
-    color: var(--color-muted);
+    background: #0c3439;
+    color: #e2efed;
     font-size: .83rem;
     line-height: 1.65;
 
-    p { margin-bottom: .55rem; }
-    a:link, a:visited, a:active { color: var(--color-teal); }
-    a:hover { color: var(--color-teal-deep); }
+    > p { position: relative; z-index: 2; margin-bottom: .55rem; }
+    a:link, a:visited, a:active { color: #b7dcd2; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    a:hover { color: #fff; }
+  }
+
+  .footer-artwork {
+    position: absolute;
+    z-index: 0;
+    inset: -14% 0;
+    overflow: hidden;
+    opacity: var(--footer-art-opacity, 1);
+    pointer-events: none;
+  }
+
+  .footer-artwork img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+    transform: translate3d(0, var(--footer-parallax-y, 0px), 0) scale(1.08);
+    will-change: transform;
+  }
+
+  .footer-main-content::before {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: linear-gradient(100deg, rgba(8, 35, 39, .9), rgba(8, 35, 39, .78)), linear-gradient(0deg, rgba(8, 35, 39, .15), transparent 60%);
+    content: "";
+    pointer-events: none;
   }
 
   @media (max-width: 700px) {
     .footer-main-content { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-artwork img { will-change: auto; }
   }
 }
 

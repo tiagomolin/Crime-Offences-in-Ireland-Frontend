@@ -1,2 +1,4 @@
 node_modules
 dist/
+.surge-token
+.surge-domain

@@ -1,13 +1,11 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config";
-import { SetStateAction, useEffect, useState } from "react";
-import { Offence } from "./Offence";
+import { useEffect, useState } from "react";
 
 import "../styles/crimeOffences.scss";
 import { useFilters } from "../contexts/FiltersContext";
 import CheckboxTree, { OnCheckNode, OnExpandNode } from "react-checkbox-tree";
 import "../../node_modules/react-checkbox-tree/lib/react-checkbox-tree.css";
-//import fontawesome from '@fortawesome/fontawesome'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
@@ -19,8 +17,6 @@ import {
   faSquareMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "react-bootstrap";
-
-//fontawesome.library.add(faCheckSquare, faCoffee);
 
 interface Offence {
   _id: string;
@@ -40,6 +36,8 @@ export function CrimeOffences() {
   const [crimeOffencesTree, setCrimeOffencesTree] = useState<CategoryTree[]>(
     []
   );
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const { selectedOffences, setSelectedOffences } = useFilters();
 
@@ -83,13 +81,18 @@ export function CrimeOffences() {
   }
 
   function fetchCategoryTreeData() {
+    setIsLoading(true);
+    setLoadError(null);
     axios
       .get(`${API_BASE_URL}/categories`)
       .then((response) => {
         setCrimeOffencesTree([mountOffenceTree(response.data)]);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoadError("Offence categories could not be loaded.");
+        setIsLoading(false);
       });
   }
 
@@ -109,25 +112,38 @@ export function CrimeOffences() {
     <div className="crime-offences">
       <h3>Offence categories</h3>
       <Container className="container-crime-offences-filter">
-        <CheckboxTree
-          nodes={crimeOffencesTree}
-          checked={selectedOffences}
-          expanded={expandedOffences}
-          onCheck={onCheckCheckbox}
-          onExpand={onExpandCheckbox}
-          icons={{
-            check: <FontAwesomeIcon icon={faCheckSquare} />,
-            uncheck: <FontAwesomeIcon icon={faSquare} />,
-            halfCheck: <FontAwesomeIcon icon={faSquareMinus} />,
-            expandClose: <FontAwesomeIcon icon={faChevronRight} size="3x" />,
-            expandOpen: <FontAwesomeIcon icon={faChevronDown} />,
-            expandAll: <FontAwesomeIcon icon={faPlusSquare} />,
-            collapseAll: <FontAwesomeIcon icon={faMinusSquare} />,
-            parentClose: null,
-            parentOpen: null,
-            leaf: null,
-          }}
-        />
+        {loadError ? (
+          <div className="category-state category-state-error" role="alert">
+            <span>{loadError}</span>
+            <button type="button" onClick={fetchCategoryTreeData}>Try again</button>
+          </div>
+        ) : isLoading ? (
+          <div className="category-skeleton" role="status" aria-label="Loading offence categories">
+            <i /><i /><i /><i />
+          </div>
+        ) : crimeOffencesTree.length ? (
+          <CheckboxTree
+            nodes={crimeOffencesTree}
+            checked={selectedOffences}
+            expanded={expandedOffences}
+            onCheck={onCheckCheckbox}
+            onExpand={onExpandCheckbox}
+            icons={{
+              check: <FontAwesomeIcon icon={faCheckSquare} />,
+              uncheck: <FontAwesomeIcon icon={faSquare} />,
+              halfCheck: <FontAwesomeIcon icon={faSquareMinus} />,
+              expandClose: <FontAwesomeIcon icon={faChevronRight} size="3x" />,
+              expandOpen: <FontAwesomeIcon icon={faChevronDown} />,
+              expandAll: <FontAwesomeIcon icon={faPlusSquare} />,
+              collapseAll: <FontAwesomeIcon icon={faMinusSquare} />,
+              parentClose: null,
+              parentOpen: null,
+              leaf: null,
+            }}
+          />
+        ) : (
+          <p className="category-empty">No offence categories are available.</p>
+        )}
       </Container>
     </div>
   );

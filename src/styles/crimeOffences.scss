@@ -50,3 +50,19 @@
 .react-checkbox-tree .rct-node label { border-radius: 7px; transition: background-color 130ms ease; }
 .react-checkbox-tree .rct-node label:hover { background: rgba(23, 107, 112, .07); }
 .react-checkbox-tree .rct-checkbox { color: var(--color-teal); }
+
+.category-skeleton { display: grid; gap: .8rem; padding: 1rem; border: 1px solid var(--color-line); border-radius: var(--radius-control); background: #f8fafb; }
+.category-skeleton i { display: block; width: 78%; height: 11px; border-radius: 8px; background: rgba(31, 61, 72, .1); }
+.category-skeleton i:nth-child(even) { width: 58%; margin-left: 1rem; }
+.category-skeleton i:last-child { width: 68%; }
+.category-state { display: grid; gap: .75rem; padding: 1rem; border-radius: 11px; font-size: .84rem; }
+.category-state-error { border: 1px solid rgba(161, 83, 61, .2); background: #fbf4f1; color: #754536; }
+.category-state button { justify-self: start; padding: .4rem .65rem; border: 1px solid rgba(117, 69, 54, .28); border-radius: 8px; background: #fff; color: #754536; font: inherit; font-size: .78rem; font-weight: 650; transition: transform 120ms ease, background-color 180ms ease; }
+.category-state button:hover { background: #f7e9e3; }
+.category-state button:active { transform: scale(.98); }
+.category-empty { margin: 0; padding: 1rem; color: var(--color-muted); font-size: .84rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes category-breathe { 50% { opacity: .48; } }
+  .category-skeleton { animation: category-breathe 1.6s ease-in-out infinite; }
+}

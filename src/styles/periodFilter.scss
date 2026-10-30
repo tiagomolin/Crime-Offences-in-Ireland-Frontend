@@ -27,3 +27,17 @@
 .period-range { display: grid; gap: .9rem; }
 .period-range-field { display: grid; gap: .42rem; }
 .period-field-label { color: var(--color-muted); font-size: .78rem; font-weight: 650; }
+.period-skeleton { display: grid; gap: .6rem; }
+.period-skeleton i { height: 42px; border: 1px solid rgba(31, 61, 72, .07); border-radius: var(--radius-control); background: linear-gradient(100deg, #f2f6f5, #e8efed 48%, #f2f6f5); }
+.period-skeleton i:last-child { width: 60%; height: 7px; border: 0; border-radius: 6px; }
+.period-state { display: grid; gap: .65rem; padding: .9rem; border-radius: 10px; font-size: .82rem; }
+.period-state-error { border: 1px solid rgba(161, 83, 61, .2); background: #fbf4f1; color: #754536; }
+.period-state button { justify-self: start; padding: .4rem .65rem; border: 1px solid rgba(117, 69, 54, .28); border-radius: 8px; background: #fff; color: #754536; font: inherit; font-size: .78rem; font-weight: 650; transition: transform 120ms ease, background-color 180ms ease; }
+.period-state button:hover { background: #f7e9e3; }
+.period-state button:active { transform: scale(.98); }
+.period-empty { margin: 0; color: var(--color-muted); font-size: .84rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes period-breathe { 50% { opacity: .48; } }
+  .period-skeleton { animation: period-breathe 1.6s ease-in-out infinite; }
+}

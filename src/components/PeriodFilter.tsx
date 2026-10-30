@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-//import { Offence } from "./Offence";
 import { useFilters } from "../contexts/FiltersContext";
 import Form from "react-bootstrap/Form";
 import "../styles/periodFilter.scss";
@@ -28,66 +26,41 @@ export function PeriodFilter(props: Periods) {
     setSelectedPeriodTo,
   } = useFilters();
 
-  const [selectedPeriod, setSelectedPeriod] = useState(0);
+  const selectedPeriodNumber = props.is_from ? selectedPeriodFrom : selectedPeriodTo;
+  const selectedPeriod = props.periods.find(
+    (period) => period.period_number === selectedPeriodNumber
+  );
 
-  const [selectedYear, setSelectedYear] = useState(0);
-  const [selectedQuarter, setSelectedQuarter] = useState("");
+  const uniqueYears = Array.from(new Set(props.periods.map((period) => period.year)))
+    .filter((year) => year > 0)
+    .sort((a, b) => a - b);
+  const uniqueQuarters = Array.from(new Set(props.periods.map((period) => period.quarter)))
+    .filter(Boolean)
+    .sort();
 
-  //finds the year from periods list where the selected period is located
-  useEffect(() => {
+  function commitPeriod(period: Period | undefined) {
+    if (!period) return;
+
     if (props.is_from) {
-      setSelectedYear(2003);
-      setSelectedQuarter("Q1");
-      setSelectedPeriod(selectedPeriodFrom);
+      setSelectedPeriodFrom(Math.min(period.period_number, selectedPeriodTo));
     } else {
-      setSelectedYear(2021);
-      setSelectedQuarter("Q4");
-      setSelectedPeriod(selectedPeriodTo);
-    }
-  }, []);
-
-  function handleSelectedPeriodChange() {
-    //tests if the list of periods is fetched
-    if (props.periods.length > 1) {
-      const find_period = props.periods.find(
-        (period) =>
-          period.year === selectedYear && period.quarter === selectedQuarter
-      );
-
-      //Sets the selected period to the selected period
-      if (find_period) {
-        setSelectedPeriod(find_period!.period_number);
-        if (props.is_from) {
-          setSelectedPeriodFrom(find_period!.period_number);
-        } else {
-          setSelectedPeriodTo(find_period!.period_number);
-        }
-      }
+      setSelectedPeriodTo(Math.max(period.period_number, selectedPeriodFrom));
     }
   }
 
-  useEffect(() => {
-    handleSelectedPeriodChange();
-  }, [selectedYear, selectedQuarter]);
-
-  const uniqueYears = props.periods
-    .map((item) => item.year)
-    .filter((value, index, self) => self.indexOf(value) === index);
-
-  const uniqueQuarters = props.periods
-    .map((item) => item.quarter)
-    .filter((value, index, self) => self.indexOf(value) === index);
-
-  function handleSelectedYearChange(
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) {
-    setSelectedYear(parseInt(event.target.value));
+  function handleSelectedYearChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const year = Number(event.target.value);
+    const quarter = selectedPeriod?.quarter || "Q1";
+    const period = props.periods.find((item) => item.year === year && item.quarter === quarter)
+      || props.periods.find((item) => item.year === year);
+    commitPeriod(period);
   }
 
-  function handleSelectedQuarterChange(
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) {
-    setSelectedQuarter(event.target.value);
+  function handleSelectedQuarterChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const quarter = event.target.value;
+    const year = selectedPeriod?.year;
+    const period = props.periods.find((item) => item.year === year && item.quarter === quarter);
+    commitPeriod(period);
   }
 
   return (
@@ -98,32 +71,26 @@ export function PeriodFilter(props: Periods) {
             <Form.Select
               size="lg"
               aria-label={`${props.is_from ? "From" : "To"} year`}
-              value={selectedYear}
+              value={selectedPeriod?.year ?? ""}
               onChange={handleSelectedYearChange}
+              disabled={!selectedPeriod}
             >
-              {uniqueYears.map((year) => {
-                return (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                );
-              })}
+              {uniqueYears.map((year) => (
+                <option key={year} value={year}>{year}</option>
+              ))}
             </Form.Select>
           </Col>
           <Col md={5}>
             <Form.Select
               size="lg"
               aria-label={`${props.is_from ? "From" : "To"} quarter`}
-              value={selectedQuarter}
+              value={selectedPeriod?.quarter ?? ""}
               onChange={handleSelectedQuarterChange}
+              disabled={!selectedPeriod}
             >
-              {uniqueQuarters.map((quarter) => {
-                return (
-                  <option key={quarter} value={quarter}>
-                    {quarter}
-                  </option>
-                );
-              })}
+              {uniqueQuarters.map((quarter) => (
+                <option key={quarter} value={quarter}>{quarter}</option>
+              ))}
             </Form.Select>
           </Col>
         </Row>

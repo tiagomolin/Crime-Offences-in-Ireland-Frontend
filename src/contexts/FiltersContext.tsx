@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, FC } from "react";
+import { createContext, useState, useContext, FC, useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 
@@ -30,6 +30,10 @@ interface IFiltersContext {
   offenceMapData: Offence[];
   selectedDivision: Division;
   offenceGraphData: Offence[];
+  isMapLoading: boolean;
+  mapError: string | null;
+  isGraphLoading: boolean;
+  graphError: string | null;
   periods: Period[];
   gardaDivisions: Division[];
   setSelectPredictedData: (value: boolean) => void;
@@ -37,6 +41,7 @@ interface IFiltersContext {
   setSelectedPeriodTo: (value: number) => void;
   setSelectedOffences: (value: string[]) => void;
   fetchOffenceMapData: () => void;
+  fetchOffenceGraphData: (division?: number) => void;
   pickDivision: (value: Division) => void;
   setPeriods: (value: Period[]) => void;
   setGardaDivisions: (value: Division[]) => void;
@@ -125,8 +130,12 @@ const defaultState = {
     "157",
   ],
   offenceMapData: [],
+  isMapLoading: true,
+  mapError: null,
   selectedDivision: {} as Division,
   offenceGraphData: [],
+  isGraphLoading: true,
+  graphError: null,
   periods: [
     { _id: "0", period_number: 0, complete_quarter: "", year: 0, quarter: "" },
   ],
@@ -136,6 +145,7 @@ const defaultState = {
   setSelectedPeriodTo: (value: number) => {},
   setSelectedOffences: (value: string[]) => {},
   fetchOffenceMapData: () => {},
+  fetchOffenceGraphData: (division?: number) => {},
   pickDivision: (value: Division) => {},
   setPeriods: (value: Period[]) => {},
   setGardaDivisions: (value: Division[]) => {},
@@ -157,9 +167,21 @@ export const FiltersProvider: FC = ({ children }) => {
     defaultState.selectedOffences
   );
 
+  function updateSelectedPeriodFrom(value: number) {
+    setSelectedPeriodFrom(Math.min(value, selectedPeriodTo));
+  }
+
+  function updateSelectedPeriodTo(value: number) {
+    setSelectedPeriodTo(Math.max(value, selectedPeriodFrom));
+  }
+
   const [offenceMapData, setOffenceMapData] = useState<Offence[]>([]);
+  const [isMapLoading, setIsMapLoading] = useState(true);
+  const [mapError, setMapError] = useState<string | null>(null);
   const [selectedDivision, setSelectedDivision] = useState({} as Division);
   const [offenceGraphData, setOffenceGraphData] = useState<Offence[]>([]);
+  const [isGraphLoading, setIsGraphLoading] = useState(true);
+  const [graphError, setGraphError] = useState<string | null>(null);
   const [periods, setPeriods] = useState<Period[]>(defaultState.periods);
   const [gardaDivisions, setGardaDivisions] = useState<Division[]>([]);
 
@@ -187,6 +209,8 @@ export const FiltersProvider: FC = ({ children }) => {
   }
 
   function fetchOffenceGraphData(division?: number) {
+    setIsGraphLoading(true);
+    setGraphError(null);
     const offenceMap = returnCategoriesFilter();
 
     const req_data = {
@@ -209,14 +233,19 @@ export const FiltersProvider: FC = ({ children }) => {
           };
         });
         setOffenceGraphData(mapped);
+        setIsGraphLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setGraphError("Quarterly figures could not be loaded. Check your connection and try again.");
+        setIsGraphLoading(false);
       });
   }
 
   //creates a function that fetches the data from the api
   function fetchOffenceMapData() {
+    setIsMapLoading(true);
+    setMapError(null);
     const offenceMap = returnCategoriesFilter();
 
     const req_data = {
@@ -238,15 +267,22 @@ export const FiltersProvider: FC = ({ children }) => {
           };
         });
         setOffenceMapData(mapped);
+        setIsMapLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setMapError("Offence counts could not be loaded. Check your connection and try again.");
+        setIsMapLoading(false);
       });
 
     //populates the graph with data from the api, with no division filter
     fetchOffenceGraphData();
     setSelectedDivision({} as Division);
   }
+
+  useEffect(() => {
+    fetchOffenceMapData();
+  }, [selectedPeriodFrom, selectedPeriodTo, selectedOffences]);
 
   return (
     <FiltersContext.Provider
@@ -258,13 +294,18 @@ export const FiltersProvider: FC = ({ children }) => {
         offenceMapData,
         selectedDivision,
         offenceGraphData,
+        isMapLoading,
+        mapError,
+        isGraphLoading,
+        graphError,
         periods,
         gardaDivisions,
         setSelectPredictedData,
-        setSelectedPeriodFrom,
-        setSelectedPeriodTo,
+        setSelectedPeriodFrom: updateSelectedPeriodFrom,
+        setSelectedPeriodTo: updateSelectedPeriodTo,
         setSelectedOffences,
         fetchOffenceMapData,
+        fetchOffenceGraphData,
         pickDivision,
         setPeriods,
         setGardaDivisions,

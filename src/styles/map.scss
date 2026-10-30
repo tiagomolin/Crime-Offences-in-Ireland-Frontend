@@ -1,8 +1,8 @@
 .map {
   display: block;
   overflow: hidden;
-  border: 1px solid var(--color-line);
-  border-radius: 10px;
+  border: 0;
+  border-radius: 14px;
 
   .map-heading {
     display: flex;
@@ -29,6 +29,8 @@
   .leaflet-container {
     height: min(62vh, 680px) !important;
     min-height: 380px;
+    border: 1px solid rgba(31, 61, 72, .1);
+    border-radius: 15px;
     background: #e6eef0;
   }
 }
@@ -50,13 +52,34 @@
 }
 
 .info-legend {
-  background-color: rgba(255, 255, 255, 0.96);
-  padding: 10px 12px;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, .91);
+  padding: 12px 14px;
+  border: 1px solid rgba(31, 61, 72, .13);
+  border-radius: 13px;
+  box-shadow: 0 8px 26px rgba(19, 48, 54, .14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: block;
   align-items: center;
   justify-content: center;
+}
+
+.info-legend h5 { margin-bottom: .55rem; color: var(--color-ink); font-size: .75rem; font-weight: 700; letter-spacing: .04em; }
+.info-legend h3 { margin: 0; color: var(--color-ink); font-size: .78rem; font-variant-numeric: tabular-nums; font-weight: 650; }
+
+.map-loading-state,
+.map-state { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 0 0 .85rem; padding: .75rem .9rem; border-radius: 11px; font-size: .82rem; }
+.map-loading-state { justify-content: flex-start; color: #4e6c6d; background: #edf5f2; }
+.map-loading-dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; background: var(--color-teal); box-shadow: 0 0 0 4px rgba(23, 107, 112, .1); }
+.map-state-error { border: 1px solid rgba(161, 83, 61, .2); background: #fbf4f1; color: #754536; }
+.map-state-empty { justify-content: flex-start; border: 1px solid var(--color-line); background: #f7faf9; color: var(--color-muted); }
+.map-state button { flex: 0 0 auto; padding: .4rem .65rem; border: 1px solid rgba(117, 69, 54, .28); border-radius: 8px; background: #fff; color: #754536; font: inherit; font-size: .78rem; font-weight: 650; transition: transform 120ms ease, background-color 180ms ease; }
+.map-state button:hover { background: #f7e9e3; }
+.map-state button:active { transform: scale(.98); }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes map-status-breathe { 50% { opacity: .5; } }
+  .map-loading-dot { animation: map-status-breathe 1.5s ease-in-out infinite; }
 }
 
 .legend-box {

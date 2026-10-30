@@ -5,7 +5,6 @@ import {
   MapContainer,
   TileLayer,
   ZoomControl,
-  MapContainerProps,
 } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import Legend from "./Legend";
@@ -13,8 +12,6 @@ import "leaflet/dist/leaflet.css";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { DivisionArea } from "./DivisionArea";
-
-//import "leaflet/dist/leaflet.css";
 
 interface OffenceCountDivision {
   division_number: number;
@@ -28,13 +25,16 @@ export function Map() {
   const {
     offenceMapData,
     fetchOffenceMapData,
-    pickDivision,
+    isMapLoading,
+    mapError,
     gardaDivisions,
     setGardaDivisions,
   } = useFilters();
 
   const [minOffenceCount, setMinOffenceCount] = useState(0);
   const [maxOffenceCount, setMaxOffenceCount] = useState(0);
+  const [isLoadingDivisions, setIsLoadingDivisions] = useState(true);
+  const [divisionsError, setDivisionsError] = useState<string | null>(null);
 
   function returnCrimeOffencesCount(division_number: number) {
     //finds the offenceMapData for the division_number
@@ -52,22 +52,26 @@ export function Map() {
   const baseWrostColor = { red: 217, green: 238, blue: 232 };
 
   function getProportionalColor(offenceCount: number) {
-    var red: number = 0;
-    var green: number = 0;
-    var blue: number = 0;
+    const counts = offenceMapData.map((offence) => offence.offence_count);
+    if (!counts.length) return "#d9eee8";
 
+    const minCount = Math.min(...counts);
+    const maxCount = Math.max(...counts);
     const proportion =
-      (offenceCount - Math.min(...offenceMapData.map((o) => o.offence_count))) /
-      (Math.max(...offenceMapData.map((o) => o.offence_count)) -
-        Math.min(...offenceMapData.map((o) => o.offence_count)));
-    red = Math.round(
+      maxCount === minCount
+        ? 0.5
+        : Math.max(
+            0,
+            Math.min(1, (offenceCount - minCount) / (maxCount - minCount))
+          );
+    const red = Math.round(
       baseWrostColor.red + (baseBestColor.red - baseWrostColor.red) * proportion
     );
-    green = Math.round(
+    const green = Math.round(
       baseWrostColor.green +
         (baseBestColor.green - baseWrostColor.green) * proportion
     );
-    blue = Math.round(
+    const blue = Math.round(
       baseWrostColor.blue +
         (baseBestColor.blue - baseWrostColor.blue) * proportion
     );
@@ -102,13 +106,16 @@ export function Map() {
   }
 
   useEffect(() => {
-    if (offenceMapData) {
+    if (offenceMapData.length) {
       setMinOffenceCount(
         Math.min(...offenceMapData.map((o) => o.offence_count))
       );
       setMaxOffenceCount(
         Math.max(...offenceMapData.map((o) => o.offence_count))
       );
+    } else {
+      setMinOffenceCount(0);
+      setMaxOffenceCount(0);
     }
   }, [offenceMapData]);
 
@@ -123,6 +130,8 @@ export function Map() {
   >([]);
 
   function fetchDivisions() {
+    setIsLoadingDivisions(true);
+    setDivisionsError(null);
     axios
       .get(`${API_BASE_URL}/divisions`)
       .then((response) => {
@@ -134,9 +143,12 @@ export function Map() {
           };
         });
         setGardaDivisions(mapped);
+        setIsLoadingDivisions(false);
       })
       .catch((error) => {
         console.log(error);
+        setDivisionsError("Garda division boundaries could not be loaded.");
+        setIsLoadingDivisions(false);
       });
   }
 
@@ -152,11 +164,38 @@ export function Map() {
       <div className="map">
         <div className="map-heading">
           <div>
-            <p className="section-kicker">GEOGRAPHIC VIEW</p>
+            <p className="section-kicker">Geographic view</p>
             <h2>Recorded offences by Garda division</h2>
           </div>
           <p className="section-hint">Select a division to explore its figures</p>
         </div>
+        {mapError && (
+          <div className="map-state map-state-error" role="alert">
+            <span>{mapError}</span>
+            <button type="button" onClick={fetchOffenceMapData}>Try again</button>
+          </div>
+        )}
+        {divisionsError && (
+          <div className="map-state map-state-error" role="alert">
+            <span>{divisionsError}</span>
+            <button type="button" onClick={fetchDivisions}>Try again</button>
+          </div>
+        )}
+        {isMapLoading && !mapError && (
+          <div className="map-loading-state" role="status">
+            <span className="map-loading-dot" /> Loading offence counts for the current selection
+          </div>
+        )}
+        {!isLoadingDivisions && !divisionsError && gardaDivisions.length === 0 && (
+          <div className="map-state map-state-empty" role="status">
+            No Garda division boundaries are available.
+          </div>
+        )}
+        {!isMapLoading && !mapError && offenceMapData.length === 0 && (
+          <div className="map-state map-state-empty" role="status">
+            No offence counts are available for this selection.
+          </div>
+        )}
         <MapContainer
           center={center}
           zoom={7}
