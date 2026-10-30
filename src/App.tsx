@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import headerArtwork from "../public/images/ireland-tidal-atlas-header.png";
 import { MainContent } from "./components/MainContent";
 import "./styles/global.scss";
 import { FiltersProvider, useFilters } from "./contexts/FiltersContext";
@@ -86,7 +87,7 @@ function Dashboard() {
     <div className="app-shell">
       <header className="site-header" ref={headerRef}>
         <div className="site-header-art" aria-hidden="true">
-          <img src="/images/ireland-tidal-atlas-header.png" alt="" />
+          <img src={headerArtwork} alt="" />
         </div>
         <div className="site-header-inner">
           <div className="hero-copy">

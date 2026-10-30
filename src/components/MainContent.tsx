@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import headerArtwork from "../../public/images/ireland-tidal-atlas-header.png";
 import "../styles/mainPage.scss";
 import { Map } from "./Map";
 import { Graph } from "./Graph";
@@ -56,7 +57,7 @@ export function MainContent() {
       </section>
       <footer className="footer-main-content" ref={footerRef}>
           <div className="footer-artwork" aria-hidden="true">
-            <img src="/images/ireland-tidal-atlas-header.png" alt="" />
+            <img src={headerArtwork} alt="" />
           </div>
           <p>
             This website was developed by Tiago Molin, Student ID 21115281, as
